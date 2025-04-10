@@ -1,11 +1,13 @@
-#ifndef _CORE_H
-#define _CORE_H
+#ifndef _IMPORT_HPP
+#define _IMPORT_HPP
 
 #include <iostream>
 #include <string>
 #include <map>
+#include <unordered_map>
 #include <vector>
 #include <set> 
+#include <functional>
 
 
 #include <unistd.h>
@@ -19,6 +21,17 @@
 #include <syscall.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <sys/statfs.h>
+#include <errno.h>
+#include <signal.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <netinet/tcp.h>
+#include <sys/mman.h>
+
 
 
 #endif

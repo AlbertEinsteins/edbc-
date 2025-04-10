@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 
 set(BUILD_SHARED_LIBS OFF)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(
@@ -18,8 +18,8 @@ endif()
 
 # Set Compiler flags
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra -Werror")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wno-unused-parameter -Wno-attributes") # TODO: remove
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -ggdb -fsanitize=${REDBASE_SANITIZER} -fno-limit-debug-info -fno-omit-frame-pointer -fno-optimize-sibling-calls")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}  -Wno-unused-parameter-Wno-attributes -Wunused-parameter") # TODO: remove
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -ggdb")
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
@@ -32,22 +32,27 @@ message(STATUS "CMAKE_SHARED_LINKER_FLAGS: ${CMAKE_SHARED_LINKER_FLAGS}")
 set(SRC_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/src/include)
 # set(TEST_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/test/include)
 set(THIRD_PARTY_DIR
-                    ${PROJECT_SOURCE_DIR}/boost_1_82_0
-                    ${PROJECT_SOURCE_DIR}/json/include)
+                    ${PROJECT_SOURCE_DIR}/third_party/json/include
+                    ${PROJECT_SOURCE_DIR}/third_party/fmt/include
+                    ${PROJECT_SOURCE_DIR}/third_party/argparse/include)
 
 include_directories(${SRC_INCLUDE_DIR} ${THIRD_PARTY_DIR})
 
 
 add_subdirectory(third_party/json)
+add_subdirectory(third_party/fmt)
+add_subdirectory(third_party/argparse)
+
 add_subdirectory(src)
 # add_subdirectory(test)
 
 
-########## Make Target ###########
-
-                    
+########## Make Target ###########                    
 
 
 
 add_executable(edb src/pmd/pmdMain.cpp)
 target_link_libraries(edb edblib)
+
+add_executable(edb-client src/client/edb.cpp)
+target_link_libraries(edb-client edblib)
